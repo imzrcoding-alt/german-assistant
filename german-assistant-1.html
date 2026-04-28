@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Weg nach Deutschland">
+<title>Weg nach Deutschland 🇩🇪</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --black: #0a0a0f;
+    --dark: #111118;
+    --card: #16161f;
+    --border: #2a2a3a;
+    --gold: #f5c518;
+    --gold2: #e8a000;
+    --blue: #4a9eff;
+    --green: #3ddc97;
+    --red: #ff4757;
+    --text: #e8e8f0;
+    --muted: #666680;
+    --font: 'Vazirmatn', sans-serif;
+    --mono: 'Space Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: var(--font);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1025 50%, #0a0f1a 100%);
+    padding: 20px 16px 16px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .logo {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .level-badge {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #000;
+    font-weight: 700;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-family: var(--mono);
+  }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+  }
+
+  .progress-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-family: var(--mono);
+  }
+
+  .progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--blue));
+    border-radius: 4px;
+    width: 15%;
+    transition: width 1s ease;
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 20px;
+    background: white;
+    opacity: 0.3;
+    filter: blur(4px);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
+
+  .progress-milestones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+
+  .milestone {
+    font-size: 9px;
+    color: var(--muted);
+    font-family: var(--mono);
+    text-align: center;
+  }
+
+  .milestone.done { color: var(--gold); }
+  .milestone.current { color: var(--blue); }
+
+  /* NAV TABS */
+  .nav {
+    display: flex;
+    background: var(--dark);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+
+  .nav-btn {
+    flex: 1;
+    min-width: 70px;
+    padding: 12px 8px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font);
+    font-size: 11px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .nav-btn .icon { font-size: 18px; }
+  .nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .nav-btn:active { transform: scale(0.95); }
+
+  /* PAGES */
+  .page { display: none; padding: 16px; }
+  .page.active { display: block; }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .card-highlight {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #16161f, #1a1500);
+  }
+
+  /* CHAT */
+  .chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 200px);
+  }
+
+  .messages {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .message {
+    margin-bottom: 12px;
+    animation: fadeUp 0.3s ease;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .message.user { text-align: left; }
+  .message.assistant { text-align: right; }
+
+  .bubble {
+    display: inline-block;
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .message.user .bubble {
+    background: linear-gradient(135deg, #1a2a4a, #0d1a30);
+    border: 1px solid #2a4a7a;
+    border-radius: 16px 16px 16px 4px;
+    color: #a8d4ff;
+  }
+
+  .message.assistant .bubble {
+    background: linear-gradient(135deg, #1a1500, #16161f);
+    border: 1px solid var(--gold);
+    border-radius: 16px 16px 4px 16px;
+    color: var(--text);
+  }
+
+  .msg-label {
+    font-size: 9px;
+    font-family: var(--mono);
+    color: var(--muted);
+    margin-bottom: 4px;
+    padding: 0 4px;
+  }
+
+  .chat-input-area {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    align-items: flex-end;
+  }
+
+  .chat-input {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 10px 16px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    max-height: 100px;
+    overflow-y: auto;
+    transition: border-color 0.2s;
+  }
+
+  .chat-input:focus { border-color: var(--gold); }
+  .chat-input::placeholder { color: var(--muted); }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .send-btn:active { transform: scale(0.9); }
+  .send-btn:disabled { opacity: 0.4; }
+
+  /* QUICK ACTIONS */
+  .quick-actions {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .quick-actions::-webkit-scrollbar { display: none; }
+
+  .quick-btn {
+    white-space: nowrap;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 12px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .quick-btn:active { transform: scale(0.95); border-color: var(--gold); color: var(--gold); }
+
+  /* VOCAB CARDS */
+  .vocab-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 12px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vocab-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--blue));
+  }
+
+  .vocab-german {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-family: var(--mono);
+  }
+
+  .vocab-article {
+    font-size: 14px;
+    color: var(--blue);
+    margin-bottom: 8px;
+    font-family: var(--mono);
+  }
+
+  .vocab-persian {
+    font-size: 16px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+
+  .vocab-example {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .vocab-tag {
+    display: inline-block;
+    background: var(--border);
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 8px;
+    font-family: var(--mono);
+  }
+
+  /* REMINDERS */
+  .reminder-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+
+  .reminder-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .reminder-info { flex: 1; }
+  .reminder-title { font-size: 14px; font-weight: 500; }
+  .reminder-time { font-size: 11px; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+
+  .reminder-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-family: var(--mono);
+    font-weight: 700;
+  }
+
+  /* ADD REMINDER FORM */
+  .add-form {
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+  }
+
+  .form-input {
+    width: 100%;
+    background: var(--black);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 8px;
+  }
+
+  .form-input:focus { border-color: var(--gold); }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-family: var(--font);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #000;
+    font-weight: 700;
+    width: 100%;
+  }
+
+  .btn-gold:active { transform: scale(0.98); }
+
+  /* ROADMAP */
+  .roadmap-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .roadmap-line {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .roadmap-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: 2px solid var(--border);
+    background: var(--dark);
+    z-index: 1;
+  }
+
+  .roadmap-dot.done { border-color: var(--green); background: #0a2a1a; }
+  .roadmap-dot.current { border-color: var(--gold); background: #1a1500; animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245, 197, 24, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(245, 197, 24, 0); }
+  }
+
+  .roadmap-connector {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    margin: 4px 0;
+    min-height: 20px;
+  }
+
+  .roadmap-content { flex: 1; padding-top: 6px; padding-bottom: 16px; }
+  .roadmap-level { font-size: 16px; font-weight: 700; color: var(--text); font-family: var(--mono); }
+  .roadmap-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .roadmap-tips { margin-top: 8px; }
+
+  .tip {
+    font-size: 12px;
+    color: var(--text);
+    padding: 4px 0;
+    padding-right: 12px;
+    position: relative;
+  }
+
+  .tip::before {
+    content: '◆';
+    position: absolute;
+    right: 0;
+    color: var(--gold);
+    font-size: 8px;
+    top: 6px;
+  }
+
+  /* TYPING INDICATOR */
+  .typing {
+    display: flex;
+    gap: 4px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #1a1500, #16161f);
+    border: 1px solid var(--gold);
+    border-radius: 16px 16px 4px 16px;
+    display: inline-flex;
+    margin-right: auto;
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: typingBounce 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typingBounce {
+    0%, 100% { transform: translateY(0); opacity: 0.4; }
+    50% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 28px;
+    font-weight: 900;
+    font-family: var(--mono);
+    color: var(--gold);
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* LOADING */
+  .loading-state {
+    text-align: center;
+    padding: 20px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card);
+    border: 1px solid var(--gold);
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 13px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 1000;
+    white-space: nowrap;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-top">
+    <div class="logo">WEG NACH 🇩🇪</div>
+    <div class="level-badge">A2.1 → B2</div>
+  </div>
+  <div class="progress-section">
+    <div class="progress-labels">
+      <span>مسیر یادگیری</span>
+      <span id="progressPercent">15%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-milestones">
+      <span class="milestone done">A1</span>
+      <span class="milestone done">A2</span>
+      <span class="milestone current">▶ A2.1</span>
+      <span class="milestone">B1</span>
+      <span class="milestone">B1.2</span>
+      <span class="milestone">B2 🎯</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showPage('chat')">
+    <span class="icon">🤖</span>منشی
+  </button>
+  <button class="nav-btn" onclick="showPage('vocab')">
+    <span class="icon">📖</span>لغات
+  </button>
+  <button class="nav-btn" onclick="showPage('reminders')">
+    <span class="icon">⏰</span>یادآور
+  </button>
+  <button class="nav-btn" onclick="showPage('roadmap')">
+    <span class="icon">🗺️</span>مسیر
+  </button>
+</nav>
+
+<!-- CHAT PAGE -->
+<div class="page active" id="page-chat">
+  <div class="chat-container">
+    <div class="quick-actions">
+      <button class="quick-btn" onclick="quickSend('یک لغت جدید A2 بهم یاد بده')">🇩🇪 لغت جدید</button>
+      <button class="quick-btn" onclick="quickSend('برای این هفته یک برنامه مطالعه بده')">📅 برنامه هفته</button>
+      <button class="quick-btn" onclick="quickSend('رویدادها و همایش‌های Ausbildung در آلمان رو بررسی کن')">🔍 رویدادها</button>
+      <button class="quick-btn" onclick="quickSend('یک جمله انگیزشی به آلمانی بگو')">💪 انگیزه</button>
+      <button class="quick-btn" onclick="quickSend('چطور می‌تونم خودم رو برای Ausbildung معرفی کنم؟')">📝 معرفی</button>
+    </div>
+
+    <div class="messages" id="messages">
+      <div class="message assistant">
+        <div class="msg-label">منشی آلمانی 🤖</div>
+        <div class="bubble">
+          سلام! من منشی هوشمند مسیر آلمانیت هستم 🇩🇪<br><br>
+          می‌دونم الان A2.1 هستی و هدفت رسیدن به B2 برای Ausbildung برنامه‌نویسیه. من همیشه اینجام تا کمکت کنم!<br><br>
+          از دکمه‌های بالا شروع کن یا هر سوالی داری بپرس ✨
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" placeholder="بپرس... (فارسی یا آلمانی)" rows="1" 
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- VOCAB PAGE -->
+<div class="page" id="page-vocab">
+  <div class="section-title">لغت روز</div>
+  
+  <div class="vocab-card" id="vocabCard" onclick="flipCard()">
+    <div class="vocab-article" id="vocabArticle">der</div>
+    <div class="vocab-german" id="vocabGerman">Ausbildung</div>
+    <div class="vocab-persian" id="vocabPersian">آموزش حرفه‌ای / دوره کارآموزی</div>
+    <div class="vocab-example" id="vocabExample">Ich mache eine Ausbildung als Programmierer.</div>
+    <div class="vocab-tag" id="vocabTag">B1 • شغل و کار</div>
+  </div>
+
+  <div style="display:flex; gap:8px; margin-bottom:16px;">
+    <button class="btn btn-gold" style="flex:1" onclick="loadNewVocab()">🔄 لغت جدید</button>
+    <button class="btn" style="flex:1; background:var(--card); border:1px solid var(--border); color:var(--text)" onclick="practiceVocab()">✏️ تمرین</button>
+  </div>
+
+  <div class="section-title">لغات ضروری Ausbildung</div>
+
+  <div id="keyVocabList">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:var(--mono);color:var(--gold);font-size:16px">die Bewerbung</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px">درخواست / مدارک درخواست</div>
+        </div>
+        <span style="font-size:20px">📄</span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:var(--mono);color:var(--gold);font-size:16px">das Vorstellungsgespräch</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px">مصاحبه شغلی</div>
+        </div>
+        <span style="font-size:20px">🤝</span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:var(--mono);color:var(--gold);font-size:16px">der Lebenslauf</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px">رزومه / CV</div>
+        </div>
+        <span style="font-size:20px">📋</span>
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-family:var(--mono);color:var(--gold);font-size:16px">die Berufsschule</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:2px">مدرسه حرفه‌ای</div>
+        </div>
+        <span style="font-size:20px">🏫</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REMINDERS PAGE -->
+<div class="page" id="page-reminders">
+  <div class="section-title">یادآورهای من</div>
+
+  <div id="remindersList">
+    <div class="reminder-item">
+      <div class="reminder-icon" style="background:#1a1500">📚</div>
+      <div class="reminder-info">
+        <div class="reminder-title">مطالعه آلمانی</div>
+        <div class="reminder-time">هر روز — ۸:۰۰ صبح</div>
+      </div>
+      <span class="reminder-badge" style="background:#1a1500;color:var(--gold)">فعال</span>
+    </div>
+    <div class="reminder-item">
+      <div class="reminder-icon" style="background:#0a1a2a">🎧</div>
+      <div class="reminder-info">
+        <div class="reminder-title">پادکست آلمانی</div>
+        <div class="reminder-time">یکشنبه‌ها — ۷:۰۰ شب</div>
+      </div>
+      <span class="reminder-badge" style="background:#0a1a2a;color:var(--blue)">فعال</span>
+    </div>
+    <div class="reminder-item">
+      <div class="reminder-icon" style="background:#0a2a1a">✍️</div>
+      <div class="reminder-info">
+        <div class="reminder-title">تکرار لغات</div>
+        <div class="reminder-time">هر روز — ۹:۰۰ شب</div>
+      </div>
+      <span class="reminder-badge" style="background:#0a2a1a;color:var(--green)">فعال</span>
+    </div>
+  </div>
+
+  <div class="add-form">
+    <div class="section-title">➕ یادآور جدید</div>
+    <input class="form-input" id="reminderTitle" placeholder="عنوان یادآور..." />
+    <input class="form-input" id="reminderTime" type="time" style="color-scheme:dark" />
+    <select class="form-input" id="reminderFreq">
+      <option value="daily">هر روز</option>
+      <option value="weekly">هر هفته</option>
+      <option value="custom">روزهای خاص</option>
+    </select>
+    <button class="btn btn-gold" onclick="addReminder()">ذخیره یادآور</button>
+  </div>
+</div>
+
+<!-- ROADMAP PAGE -->
+<div class="page" id="page-roadmap">
+  <div class="section-title">مسیر تا Ausbildung</div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">~18</div>
+      <div class="stat-label">ماه تا B2</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5</div>
+      <div class="stat-label">سطح تا هدف</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot done">✓</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level" style="color:var(--green)">A1 ✓</div>
+      <div class="roadmap-desc">تموم شد! پایه آلمانی داری</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot current">▶</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level" style="color:var(--gold)">A2.1 — الان اینجایی</div>
+      <div class="roadmap-desc">~۳ ماه • تمرکز روی:</div>
+      <div class="roadmap-tips">
+        <div class="tip">گرامر پایه: افعال، حروف اضافه، جمله‌سازی</div>
+        <div class="tip">لغات روزمره و محیط کار</div>
+        <div class="tip">Duolingo + کتاب Menschen A2</div>
+        <div class="tip">۳۰ دقیقه در روز حداقل</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot">🎯</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level">A2 کامل</div>
+      <div class="roadmap-desc">~۳ ماه • آزمون Goethe A2</div>
+      <div class="roadmap-tips">
+        <div class="tip">آزمون رسمی Goethe-Institut</div>
+        <div class="tip">شروع تماشای ویدیو آلمانی</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot">⚡</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level">B1</div>
+      <div class="roadmap-desc">~۵ ماه • مکالمه واقعی</div>
+      <div class="roadmap-tips">
+        <div class="tip">Tandem با آلمانی‌زبان‌ها</div>
+        <div class="tip">شروع ارسال Bewerbung</div>
+        <div class="tip">آزمون رسمی B1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot">🏆</div>
+      <div class="roadmap-connector" style="opacity:0"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level" style="color:var(--gold)">B2 🎯 هدف نهایی</div>
+      <div class="roadmap-desc">~۷ ماه • Ausbildung Informatik</div>
+      <div class="roadmap-tips">
+        <div class="tip">مصاحبه به آلمانی</div>
+        <div class="tip">CV و Motivationsschreiben</div>
+        <div class="tip">پورتفولیو برنامه‌نویسی</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-highlight">
+    <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">💡 نکته مهم</div>
+    <div style="font-size:13px;line-height:1.7">
+      خیلی از شرکت‌ها B1 رو هم قبول می‌کنن! وقتی B1 گرفتی شروع به ارسال درخواست کن. منتظر B2 نمون.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = "https://api.anthropic.com/v1/messages";
+
+const SYSTEM_PROMPT = `تو منشی هوشمند یک ایرانی هستی که دارد آلمانی یاد می‌گیرد (الان سطح A2.1) و هدفش گرفتن مدرک B2 و پیدا کردن Ausbildung برنامه‌نویسی در آلمان است.
+
+وظایف تو:
+- کمک به یادگیری زبان آلمانی (لغت، گرامر، مکالمه)
+- برنامه‌ریزی مطالعه
+- اطلاعات درباره Ausbildung، رویدادها، فرصت‌ها
+- انگیزه دادن
+- راهنمایی برای CV، مصاحبه، Bewerbung
+
+قوانین:
+- همیشه به فارسی جواب بده مگر وقتی لغت/جمله آلمانی یاد می‌دهی
+- کوتاه و کاربردی باش (پیام‌های کوتاه برای موبایل)
+- از ایموجی استفاده کن
+- واقع‌بین و صادق باش
+- وقتی لغت آلمانی میگی، حتما فارسی رو هم بنویس`;
+
+let messages = [];
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function quickSend(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+
+  addMessage('user', text);
+  messages.push({ role: 'user', content: text });
+
+  // Typing indicator
+  const typingId = showTyping();
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: messages
+      })
+    });
+
+    const data = await response.json();
+    removeTyping(typingId);
+
+    const reply = data.content?.[0]?.text || 'خطایی رخ داد. دوباره تلاش کن.';
+    messages.push({ role: 'assistant', content: reply });
+    addMessage('assistant', reply);
+
+  } catch (err) {
+    removeTyping(typingId);
+    addMessage('assistant', '⚠️ خطا در اتصال. اینترنت رو چک کن و دوباره تلاش کن.');
+  }
+
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function addMessage(role, text) {
+  const messagesEl = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `message ${role}`;
+  div.innerHTML = `
+    <div class="msg-label">${role === 'user' ? 'تو 👤' : 'منشی آلمانی 🤖'}</div>
+    <div class="bubble">${text.replace(/\n/g, '<br>')}</div>
+  `;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function showTyping() {
+  const messagesEl = document.getElementById('messages');
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'message assistant';
+  div.innerHTML = `
+    <div class="msg-label">منشی آلمانی 🤖</div>
+    <div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+  `;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// VOCAB
+const vocabList = [
+  { article: 'die', german: 'Ausbildung', persian: 'دوره آموزش حرفه‌ای', example: 'Ich mache eine Ausbildung.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'der', german: 'Arbeitsplatz', persian: 'محل کار', example: 'Mein Arbeitsplatz ist modern.', tag: 'A2 • محیط کار', level: 'A2' },
+  { article: 'die', german: 'Bewerbung', persian: 'درخواست / اپلیکیشن', example: 'Ich schreibe eine Bewerbung.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'das', german: 'Vorstellungsgespräch', persian: 'مصاحبه شغلی', example: 'Das Gespräch war gut.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'der', german: 'Lebenslauf', persian: 'رزومه / CV', example: 'Mein Lebenslauf ist fertig.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'die', german: 'Erfahrung', persian: 'تجربه', example: 'Ich habe Erfahrung in Python.', tag: 'B1 • عمومی', level: 'B1' },
+  { article: 'das', german: 'Gehalt', persian: 'حقوق', example: 'Das Gehalt ist fair.', tag: 'B1 • کار', level: 'B1' },
+  { article: 'die', german: 'Fähigkeit', persian: 'توانایی / مهارت', example: 'Ich habe viele Fähigkeiten.', tag: 'B1 • عمومی', level: 'B1' },
+];
+
+let currentVocab = 0;
+
+function loadNewVocab() {
+  currentVocab = (currentVocab + 1) % vocabList.length;
+  const v = vocabList[currentVocab];
+  document.getElementById('vocabArticle').textContent = v.article;
+  document.getElementById('vocabGerman').textContent = v.german;
+  document.getElementById('vocabPersian').textContent = v.persian;
+  document.getElementById('vocabExample').textContent = v.example;
+  document.getElementById('vocabTag').textContent = v.tag;
+  showToast('لغت جدید! 📖');
+}
+
+function flipCard() {
+  showToast('💡 ' + vocabList[currentVocab].example);
+}
+
+async function practiceVocab() {
+  const v = vocabList[currentVocab];
+  showPage_chat();
+  await sleep(100);
+  quickSend(`یک تمرین برای لغت "${v.german}" (${v.persian}) بده`);
+}
+
+function showPage_chat() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-chat').classList.add('active');
+  document.querySelector('.nav-btn').classList.add('active');
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// REMINDERS
+let reminders = [
+  { title: 'مطالعه آلمانی', time: '08:00', freq: 'هر روز', emoji: '📚', color: '#1a1500', badgeColor: 'var(--gold)' },
+  { title: 'پادکست آلمانی', time: '19:00', freq: 'یکشنبه‌ها', emoji: '🎧', color: '#0a1a2a', badgeColor: 'var(--blue)' },
+  { title: 'تکرار لغات', time: '21:00', freq: 'هر روز', emoji: '✍️', color: '#0a2a1a', badgeColor: 'var(--green)' },
+];
+
+function addReminder() {
+  const title = document.getElementById('reminderTitle').value.trim();
+  const time = document.getElementById('reminderTime').value;
+  const freq = document.getElementById('reminderFreq').value;
+
+  if (!title || !time) { showToast('⚠️ عنوان و زمان رو وارد کن'); return; }
+
+  const freqLabel = freq === 'daily' ? 'هر روز' : freq === 'weekly' ? 'هر هفته' : 'روزهای خاص';
+  reminders.push({ title, time, freq: freqLabel, emoji: '🔔', color: '#1a001a', badgeColor: 'var(--gold)' });
+
+  document.getElementById('reminderTitle').value = '';
+  document.getElementById('reminderTime').value = '';
+
+  renderReminders();
+  showToast('✅ یادآور اضافه شد!');
+}
+
+function renderReminders() {
+  const list = document.getElementById('remindersList');
+  list.innerHTML = reminders.map(r => `
+    <div class="reminder-item">
+      <div class="reminder-icon" style="background:${r.color}">${r.emoji}</div>
+      <div class="reminder-info">
+        <div class="reminder-title">${r.title}</div>
+        <div class="reminder-time">${r.freq} — ${r.time}</div>
+      </div>
+      <span class="reminder-badge" style="background:${r.color};color:${r.badgeColor}">فعال</span>
+    </div>
+  `).join('');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// PWA Install
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window._deferredPrompt = e;
+  showToast('💡 می‌تونی این اپ رو نصب کنی!');
+});
+</script>
+</body>
+</html>
