@@ -788,4 +788,344 @@
       </div>
       <span class="reminder-badge" style="background:#0a1a2a;color:var(--blue)">فعال</span>
     </div>
-    <div class="remi
+    <div class="reminder-item">
+      <div class="reminder-icon" style="background:#0a2a1a">✍️</div>
+      <div class="reminder-info">
+        <div class="reminder-title">تکرار لغات</div>
+        <div class="reminder-time">هر روز — ۹:۰۰ شب</div>
+      </div>
+      <span class="reminder-badge" style="background:#0a2a1a;color:var(--green)">فعال</span>
+    </div>
+  </div>
+
+  <div class="add-form">
+    <div class="section-title">➕ یادآور جدید</div>
+    <input class="form-input" id="reminderTitle" placeholder="عنوان یادآور..." />
+    <input class="form-input" id="reminderTime" type="time" style="color-scheme:dark" />
+    <select class="form-input" id="reminderFreq">
+      <option value="daily">هر روز</option>
+      <option value="weekly">هر هفته</option>
+      <option value="custom">روزهای خاص</option>
+    </select>
+    <button class="btn btn-gold" onclick="addReminder()">ذخیره یادآور</button>
+  </div>
+</div>
+
+<!-- ROADMAP PAGE -->
+<div class="page" id="page-roadmap">
+  <div class="section-title">مسیر تا Ausbildung</div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">~18</div>
+      <div class="stat-label">ماه تا B2</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">5</div>
+      <div class="stat-label">سطح تا هدف</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot done">✓</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level" style="color:var(--green)">A1 ✓</div>
+      <div class="roadmap-desc">تموم شد! پایه آلمانی داری</div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot current">▶</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level" style="color:var(--gold)">A2.1 — الان اینجایی</div>
+      <div class="roadmap-desc">~۳ ماه • تمرکز روی:</div>
+      <div class="roadmap-tips">
+        <div class="tip">گرامر پایه: افعال، حروف اضافه، جمله‌سازی</div>
+        <div class="tip">لغات روزمره و محیط کار</div>
+        <div class="tip">Duolingo + کتاب Menschen A2</div>
+        <div class="tip">۳۰ دقیقه در روز حداقل</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot">🎯</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level">A2 کامل</div>
+      <div class="roadmap-desc">~۳ ماه • آزمون Goethe A2</div>
+      <div class="roadmap-tips">
+        <div class="tip">آزمون رسمی Goethe-Institut</div>
+        <div class="tip">شروع تماشای ویدیو آلمانی</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot">⚡</div>
+      <div class="roadmap-connector"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level">B1</div>
+      <div class="roadmap-desc">~۵ ماه • مکالمه واقعی</div>
+      <div class="roadmap-tips">
+        <div class="tip">Tandem با آلمانی‌زبان‌ها</div>
+        <div class="tip">شروع ارسال Bewerbung</div>
+        <div class="tip">آزمون رسمی B1</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="roadmap-item">
+    <div class="roadmap-line">
+      <div class="roadmap-dot">🏆</div>
+      <div class="roadmap-connector" style="opacity:0"></div>
+    </div>
+    <div class="roadmap-content">
+      <div class="roadmap-level" style="color:var(--gold)">B2 🎯 هدف نهایی</div>
+      <div class="roadmap-desc">~۷ ماه • Ausbildung Informatik</div>
+      <div class="roadmap-tips">
+        <div class="tip">مصاحبه به آلمانی</div>
+        <div class="tip">CV و Motivationsschreiben</div>
+        <div class="tip">پورتفولیو برنامه‌نویسی</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-highlight">
+    <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">💡 نکته مهم</div>
+    <div style="font-size:13px;line-height:1.7">
+      خیلی از شرکت‌ها B1 رو هم قبول می‌کنن! وقتی B1 گرفتی شروع به ارسال درخواست کن. منتظر B2 نمون.
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL = "https://api.anthropic.com/v1/messages";
+
+const SYSTEM_PROMPT = `تو منشی هوشمند یک ایرانی هستی که دارد آلمانی یاد می‌گیرد (الان سطح A2.1) و هدفش گرفتن مدرک B2 و پیدا کردن Ausbildung برنامه‌نویسی در آلمان است.
+
+وظایف تو:
+- کمک به یادگیری زبان آلمانی (لغت، گرامر، مکالمه)
+- برنامه‌ریزی مطالعه
+- اطلاعات درباره Ausbildung، رویدادها، فرصت‌ها
+- انگیزه دادن
+- راهنمایی برای CV، مصاحبه، Bewerbung
+
+قوانین:
+- همیشه به فارسی جواب بده مگر وقتی لغت/جمله آلمانی یاد می‌دهی
+- کوتاه و کاربردی باش (پیام‌های کوتاه برای موبایل)
+- از ایموجی استفاده کن
+- واقع‌بین و صادق باش
+- وقتی لغت آلمانی میگی، حتما فارسی رو هم بنویس`;
+
+let messages = [];
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function quickSend(text) {
+  document.getElementById('chatInput').value = text;
+  sendMessage();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = 'auto';
+  document.getElementById('sendBtn').disabled = true;
+
+  addMessage('user', text);
+  messages.push({ role: 'user', content: text });
+
+  // Typing indicator
+  const typingId = showTyping();
+
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: messages
+      })
+    });
+
+    const data = await response.json();
+    removeTyping(typingId);
+
+    const reply = data.content?.[0]?.text || 'خطایی رخ داد. دوباره تلاش کن.';
+    messages.push({ role: 'assistant', content: reply });
+    addMessage('assistant', reply);
+
+  } catch (err) {
+    removeTyping(typingId);
+    addMessage('assistant', '⚠️ خطا در اتصال. اینترنت رو چک کن و دوباره تلاش کن.');
+  }
+
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function addMessage(role, text) {
+  const messagesEl = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = `message ${role}`;
+  div.innerHTML = `
+    <div class="msg-label">${role === 'user' ? 'تو 👤' : 'منشی آلمانی 🤖'}</div>
+    <div class="bubble">${text.replace(/\n/g, '<br>')}</div>
+  `;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+}
+
+function showTyping() {
+  const messagesEl = document.getElementById('messages');
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'message assistant';
+  div.innerHTML = `
+    <div class="msg-label">منشی آلمانی 🤖</div>
+    <div class="typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+  `;
+  messagesEl.appendChild(div);
+  messagesEl.scrollTop = messagesEl.scrollHeight;
+  return id;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+// VOCAB
+const vocabList = [
+  { article: 'die', german: 'Ausbildung', persian: 'دوره آموزش حرفه‌ای', example: 'Ich mache eine Ausbildung.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'der', german: 'Arbeitsplatz', persian: 'محل کار', example: 'Mein Arbeitsplatz ist modern.', tag: 'A2 • محیط کار', level: 'A2' },
+  { article: 'die', german: 'Bewerbung', persian: 'درخواست / اپلیکیشن', example: 'Ich schreibe eine Bewerbung.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'das', german: 'Vorstellungsgespräch', persian: 'مصاحبه شغلی', example: 'Das Gespräch war gut.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'der', german: 'Lebenslauf', persian: 'رزومه / CV', example: 'Mein Lebenslauf ist fertig.', tag: 'B1 • شغل', level: 'B1' },
+  { article: 'die', german: 'Erfahrung', persian: 'تجربه', example: 'Ich habe Erfahrung in Python.', tag: 'B1 • عمومی', level: 'B1' },
+  { article: 'das', german: 'Gehalt', persian: 'حقوق', example: 'Das Gehalt ist fair.', tag: 'B1 • کار', level: 'B1' },
+  { article: 'die', german: 'Fähigkeit', persian: 'توانایی / مهارت', example: 'Ich habe viele Fähigkeiten.', tag: 'B1 • عمومی', level: 'B1' },
+];
+
+let currentVocab = 0;
+
+function loadNewVocab() {
+  currentVocab = (currentVocab + 1) % vocabList.length;
+  const v = vocabList[currentVocab];
+  document.getElementById('vocabArticle').textContent = v.article;
+  document.getElementById('vocabGerman').textContent = v.german;
+  document.getElementById('vocabPersian').textContent = v.persian;
+  document.getElementById('vocabExample').textContent = v.example;
+  document.getElementById('vocabTag').textContent = v.tag;
+  showToast('لغت جدید! 📖');
+}
+
+function flipCard() {
+  showToast('💡 ' + vocabList[currentVocab].example);
+}
+
+async function practiceVocab() {
+  const v = vocabList[currentVocab];
+  showPage_chat();
+  await sleep(100);
+  quickSend(`یک تمرین برای لغت "${v.german}" (${v.persian}) بده`);
+}
+
+function showPage_chat() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-chat').classList.add('active');
+  document.querySelector('.nav-btn').classList.add('active');
+}
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// REMINDERS
+let reminders = [
+  { title: 'مطالعه آلمانی', time: '08:00', freq: 'هر روز', emoji: '📚', color: '#1a1500', badgeColor: 'var(--gold)' },
+  { title: 'پادکست آلمانی', time: '19:00', freq: 'یکشنبه‌ها', emoji: '🎧', color: '#0a1a2a', badgeColor: 'var(--blue)' },
+  { title: 'تکرار لغات', time: '21:00', freq: 'هر روز', emoji: '✍️', color: '#0a2a1a', badgeColor: 'var(--green)' },
+];
+
+function addReminder() {
+  const title = document.getElementById('reminderTitle').value.trim();
+  const time = document.getElementById('reminderTime').value;
+  const freq = document.getElementById('reminderFreq').value;
+
+  if (!title || !time) { showToast('⚠️ عنوان و زمان رو وارد کن'); return; }
+
+  const freqLabel = freq === 'daily' ? 'هر روز' : freq === 'weekly' ? 'هر هفته' : 'روزهای خاص';
+  reminders.push({ title, time, freq: freqLabel, emoji: '🔔', color: '#1a001a', badgeColor: 'var(--gold)' });
+
+  document.getElementById('reminderTitle').value = '';
+  document.getElementById('reminderTime').value = '';
+
+  renderReminders();
+  showToast('✅ یادآور اضافه شد!');
+}
+
+function renderReminders() {
+  const list = document.getElementById('remindersList');
+  list.innerHTML = reminders.map(r => `
+    <div class="reminder-item">
+      <div class="reminder-icon" style="background:${r.color}">${r.emoji}</div>
+      <div class="reminder-info">
+        <div class="reminder-title">${r.title}</div>
+        <div class="reminder-time">${r.freq} — ${r.time}</div>
+      </div>
+      <span class="reminder-badge" style="background:${r.color};color:${r.badgeColor}">فعال</span>
+    </div>
+  `).join('');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// PWA Install
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  window._deferredPrompt = e;
+  showToast('💡 می‌تونی این اپ رو نصب کنی!');
+});
+</script>
+</body>
+</html>
